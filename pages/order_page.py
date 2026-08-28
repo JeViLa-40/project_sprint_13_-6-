@@ -1,20 +1,21 @@
 from pages.base_page import BasePage
 from locators.locators_order_page import LocatorsOrderPage
 from urls import Urls
+import allure
 
 class OrderPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    @allure.step('Открываем страницу заказа')
     def open_page(self):
         self.driver.get(Urls.ORDER_PAGE_URL)
 
     def choice_station(self, station_locator):
         self.click_on_element_with_wait(LocatorsOrderPage.STATION_FIELD)
         self.click_on_element_with_wait(station_locator)
-
-        
-
+ 
+    @allure.step('Оформляем заказ')
     def making_an_order(self, name, surname, address, station, phone, date, period, colour, comment):
         self.find_element_with_wait(LocatorsOrderPage.NAME_FIELD).send_keys(name)
         self.find_element_with_wait(LocatorsOrderPage.SURNAME_FIELD).send_keys(surname)
@@ -29,8 +30,10 @@ class OrderPage(BasePage):
         self.find_element_with_wait(LocatorsOrderPage.COMMENT_FIELD).send_keys(comment)
         self.click_on_element_with_wait(LocatorsOrderPage.ORDER_BUTTON)
 
+    @allure.step('Нажимаем на логотип Скутер')
     def click_on_scooter_logo(self):
         self.click_on_element_with_wait(LocatorsOrderPage.LOGO_SCOOTER)
 
+    @allure.step('Нажимаем на логотип Яндекс')
     def click_on_yandex_logo(self):
         self.click_on_element_with_wait(LocatorsOrderPage.LOGO_YANDEX)
